@@ -3,6 +3,9 @@ FROM node:20-alpine AS frontend-builder
 
 WORKDIR /app
 
+# Link image to GitHub repository
+LABEL org.opencontainers.image.source=https://github.com/chachoCL/calendario-ac-cosmetic
+
 # Copy package files
 COPY package*.json ./
 
