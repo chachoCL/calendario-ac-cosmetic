@@ -1,0 +1,24 @@
+services:
+  salon-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: beauty-salon-app
+    ports:
+      - "8080:3001"
+    volumes:
+      - salon-data:/data
+    environment:
+      - NODE_ENV=production
+      - DB_PATH=/data/salon.db
+      - JWT_SECRET=your-super-secret-key-change-this
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3001/api/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+volumes:
+  salon-data:
+    driver: local
